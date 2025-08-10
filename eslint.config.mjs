@@ -23,6 +23,11 @@ export default defineConfig([
       "@typescript-eslint": typescriptEslint,
     },
 
+    ignores: [
+      // Ignore all generated typescript files
+      "**/*.g.ts",
+    ],
+
     languageOptions: {
       globals: {
         ...globals.browser,
