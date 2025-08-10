@@ -10,43 +10,45 @@ import { FlatCompat } from "@eslint/eslintrc";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compat = new FlatCompat({
-    baseDirectory: __dirname,
-    recommendedConfig: js.configs.recommended,
-    allConfig: js.configs.all
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+  allConfig: js.configs.all,
 });
 
-export default defineConfig([{
+export default defineConfig([
+  {
     extends: compat.extends("eslint:recommended", "plugin:@typescript-eslint/recommended"),
 
     plugins: {
-        "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": typescriptEslint,
     },
 
     languageOptions: {
-        globals: {
-            ...globals.browser,
-            ...globals.node,
-        },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+      },
 
-        parser: tsParser,
-        ecmaVersion: "latest",
-        sourceType: "module",
+      parser: tsParser,
+      ecmaVersion: "latest",
+      sourceType: "module",
     },
 
     rules: {
-        "no-duplicate-imports": "error",
-        "no-self-compare": "error",
-        "no-unused-private-class-members": "warn",
-        eqeqeq: "warn",
-        "no-shadow": "warn",
-        "prefer-regex-literals": "warn",
-        "require-await": "warn",
-        camelcase: "error",
-        "no-invalid-regexp": "off",
-        "@typescript-eslint/no-var-requires": "warn",
-        "no-param-reassign": "warn",
-        "@typescript-eslint/no-namespace": "off",
-        "@typescript-eslint/ban-ts-comment": "off",
-        "@typescript-eslint/no-unused-vars": "off",
+      "no-duplicate-imports": "error",
+      "no-self-compare": "error",
+      "no-unused-private-class-members": "warn",
+      eqeqeq: "warn",
+      "no-shadow": "warn",
+      "prefer-regex-literals": "warn",
+      "require-await": "warn",
+      camelcase: "error",
+      "no-invalid-regexp": "off",
+      "@typescript-eslint/no-var-requires": "warn",
+      "no-param-reassign": "warn",
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/ban-ts-comment": "off",
+      "@typescript-eslint/no-unused-vars": "off",
     },
-}]);
+  },
+]);
