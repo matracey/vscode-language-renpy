@@ -141,9 +141,9 @@ export class Tokenizer {
         const gAnchorRe = /(?:\(\?!\\G\))|(?:\\G)/g;
         while (!stack.isEmpty()) {
             const p = stack.pop()!;
-            assert(p !== undefined, "This pattern is undefined! Please make sure that circular includes are added after both patterns are defined.");
+            assert(p != null, "This pattern is undefined! Please make sure that circular includes are added after both patterns are defined.");
 
-            if (p._patternId !== undefined && p._patternId !== -1) {
+            if (p._patternId != null && p._patternId !== -1) {
                 continue; // This pattern was already validated
             }
 
@@ -316,29 +316,29 @@ class DocumentTokenizer {
     private applyCaptures(pattern: ExTokenPattern, captureSource: CaptureSource, match: RegExpExecArray, source: string, parentNode: TreeNode) {
         const captures = captureSource === CaptureSource.MatchCaptures ? pattern.captures : captureSource === CaptureSource.BeginCaptures ? pattern.beginCaptures : pattern.endCaptures;
 
-        if (captures === undefined || match.indices === undefined) {
+        if (captures == null || match.indices == null) {
             return; // syntax error
         }
 
         let rootNode = parentNode;
 
-        if (captures[0] !== undefined) {
+        if (captures[0] != null) {
             // If capture 0 is used, treat it as a wrapper token.
             rootNode = new TreeNode();
             parentNode.addChild(rootNode);
         }
 
         for (let i = 1; i < match.indices!.length; i++) {
-            if (match.indices![i] === undefined) {
+            if (match.indices![i] == null) {
                 continue; // If the object at i is undefined, the capture is empty
             }
 
             const [startPos, endPos] = match.indices![i];
 
-            if (captures[i] === undefined) {
+            if (captures[i] == null) {
                 if (!isShippingBuild()) {
                     // If this is a 'begin' capture it's also possible to have it matched on the end pattern. Let's make sure we don't report false positives.
-                    if (captureSource === CaptureSource.BeginCaptures && pattern.end !== undefined) {
+                    if (captureSource === CaptureSource.BeginCaptures && pattern.end != null) {
                         // test the end pattern for backreferences to this capture index
                         const captureRe = new RegExp(`\\\\${i}`, "g");
                         if (captureRe.test(pattern.end.source)) {
@@ -372,7 +372,7 @@ class DocumentTokenizer {
             }
         }
 
-        if (captures[0] !== undefined) {
+        if (captures[0] != null) {
             const p = captures[0];
             const content = match[0];
 
@@ -428,7 +428,7 @@ class DocumentTokenizer {
             this.backrefTestRe.lastIndex = 0;
             reEndSource = reEndSource.replace(this.backrefTestRe, (_, g1) => {
                 const backref = matchBegin.at(parseInt(g1, 10));
-                if (backref !== undefined) {
+                if (backref != null) {
                     return escapeRegExpCharacters(backref);
                 }
                 logCatMessage(LogLevel.Warning, LogCategory.Tokenizer, `Could not find content to replace backreference ${g1}!`);
@@ -535,9 +535,9 @@ class DocumentTokenizer {
         }
 
         const cachedP = cache[p._patternId];
-        if (cachedP !== undefined) {
+        if (cachedP != null) {
             // If the cached value is null, no match was found in the entire text
-            if (cachedP === null || cachedP.matchBegin.index >= sourceStartOffset) {
+            if (cachedP == null || cachedP.matchBegin.index >= sourceStartOffset) {
                 if (cachedP?.pattern._patternType === TokenPatternType.RangePattern && !cachedP.expanded) {
                     this.expandRangeScanResult(cachedP as RangeScanResult, cache);
                 }
@@ -558,9 +558,9 @@ class DocumentTokenizer {
 
             // First check the cache
             const cachedResult = cache[next._patternId];
-            if (cachedResult !== undefined) {
+            if (cachedResult != null) {
                 // If the cached value is null, no match was found in the entire text
-                if (cachedResult === null) {
+                if (cachedResult == null) {
                     continue;
                 }
 
@@ -570,7 +570,7 @@ class DocumentTokenizer {
             }
 
             // The result wasn't cached or was invalidated, so we need to scan for the next match
-            if (scanResult === null) {
+            if (scanResult == null) {
                 switch (next._patternType) {
                     case TokenPatternType.MatchPattern:
                         scanResult = this.scanMatchPattern(next, source, sourceStartOffset);
