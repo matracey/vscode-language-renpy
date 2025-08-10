@@ -1,9 +1,10 @@
 // Color conversion methods for Color provider
-import { CancellationToken, Color, ColorInformation, ColorPresentation, DocumentColorProvider, Range, TextDocument, TextEdit, languages } from "vscode";
-import { ValueEqualsSet } from "./utilities/hashset";
-import { Tokenizer } from "./tokenizer/tokenizer";
+import { CancellationToken, Color, ColorInformation, ColorPresentation, DocumentColorProvider, languages, Range, TextDocument, TextEdit } from "vscode";
+
 import { LiteralTokenType } from "./tokenizer/renpy-tokens";
-import { TextMateRule, injectCustomTextmateTokens } from "./decorator";
+import { Tokenizer } from "./tokenizer/tokenizer";
+import { ValueEqualsSet } from "./utilities/hashset";
+import { injectCustomTextmateTokens, TextMateRule } from "./decorator";
 
 export type DocumentColorContext = {
     document: TextDocument;

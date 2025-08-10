@@ -1,9 +1,11 @@
 import { performance } from "perf_hooks";
-import { LogLevel, DecorationOptions, Disposable, ExtensionContext, MarkdownString, Uri, window, workspace } from "vscode";
-import { CharacterTokenType, LiteralTokenType, EntityTokenType, EscapedCharacterTokenType, KeywordTokenType, MetaTokenType, OperatorTokenType } from "./renpy-tokens";
+import { DecorationOptions, Disposable, ExtensionContext, LogLevel, MarkdownString, Uri, window, workspace } from "vscode";
+
+import { logMessage, logToast } from "../logger";
+
+import { CharacterTokenType, EntityTokenType, EscapedCharacterTokenType, KeywordTokenType, LiteralTokenType, MetaTokenType, OperatorTokenType } from "./renpy-tokens";
 import { TokenTree, tokenTypeToStringMap } from "./token-definitions";
 import { Tokenizer } from "./tokenizer";
-import { logMessage, logToast } from "../logger";
 
 let timeout: NodeJS.Timeout | undefined = undefined;
 
