@@ -3,7 +3,7 @@
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "Ren'Py Screen",
   "scopeName": "source.renpy.screen",
-  "patterns": [ { "include": "#screen-language" } ],
+  "patterns": [ { "include": "#screen-language" }, { "include": "#screen-action-reference" } ],
   "repository": {
     "builtin-screens": {
       "name": "support.function.builtin.screen.renpy",
@@ -20,6 +20,19 @@
             "1": { "name": "entity.name.function.renpy" },
             "2": { "name": "punctuation.separator.dot.renpy" },
             "3": { "name": "entity.name.function.renpy" }
+          }
+        }
+      ]
+    },
+    "screen-action-reference": {
+      "comment": "Highlight Jump/Call/ShowMenu first string argument as reference",
+      "patterns": [
+        {
+          "name": "meta.screen.action.reference.renpy",
+          "match": "\\b(?:Jump|Call|ShowMenu)\\(\\s*(['\"])(([A-Za-z_][A-Za-z0-9_]*)(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)\\1",
+          "captures": {
+            "2": { "name": "entity.name.reference.label.renpy" },
+            "3": { "name": "entity.name.reference.label.segment.renpy" }
           }
         }
       ]

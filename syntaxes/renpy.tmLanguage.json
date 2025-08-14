@@ -356,7 +356,7 @@
       ]
     },
     "strings-interior": {
-      "patterns": [ { "include": "#new-line" }, { "include": "#escaped_char" }, { "include": "#string-tags" }, { "include": "#constant_placeholder" } ]
+      "patterns": [ { "include": "#new-line" }, { "include": "#escaped_char" }, { "include": "#string-tags" }, { "include": "#constant_placeholder" }, { "name": "meta.interpolation.reference.renpy", "match": "\\[(?:[A-Za-z_][A-Za-z0-9_]*)(?:![a-z])?\\]" } ]
     },
     "string-tags-broken": {
       "patterns": [
@@ -568,8 +568,8 @@
         },
         {
           "comment": "Valid tags with numeric params (optional close)",
-          "match": "({)\\s*(alpha|cps|k)(=)(?:(\\*)|(\\-)|(\\+))?(\\d*(?:.\\d+)?)\\s*(})",
-          "captures": {
+          "begin": "({)\\s*(alpha|cps|k)(=)(?:(\\*)|(\\-)|(\\+))?(\\d*(?:.\\d+)?)\\s*(})",
+          "beginCaptures": {
             "0": { "name": "meta.string.tag.${2:/downcase}.start.renpy" },
             "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
             "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
@@ -579,12 +579,20 @@
             "6": { "name": "keyword.operator.arithmetic.Plus.renpy" },
             "7": { "name": "support.constant.property-value.renpy constant.numeric.renpy" },
             "8": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
-          }
+          },
+          "end": "({/)\\s*(alpha|cps|k)\\s*(})",
+          "endCaptures": {
+            "0": { "name": "meta.string.tag.${2:/downcase}.end.renpy" },
+            "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
+            "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
+            "3": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
+          },
+          "patterns": [ { "include": "#strings-interior" } ]
         },
         {
           "comment": "Valid tags with numeric params (optional close)",
-          "match": "({)\\s*(size)(=)([\\-+]?)(\\d+)\\s*(})",
-          "captures": {
+          "begin": "({)\\s*(size)(=)([\\-+]?)(\\d+)\\s*(})",
+          "beginCaptures": {
             "0": { "name": "meta.string.tag.${2:/downcase}.start.renpy" },
             "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
             "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
@@ -592,25 +600,41 @@
             "4": { "name": "keyword.operator.arithmetic.renpy" },
             "5": { "name": "support.constant.property-value.renpy constant.numeric.integer.renpy" },
             "6": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
-          }
+          },
+          "end": "({/)\\s*(size)\\s*(})",
+          "endCaptures": {
+            "0": { "name": "meta.string.tag.${2:/downcase}.end.renpy" },
+            "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
+            "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
+            "3": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
+          },
+          "patterns": [ { "include": "#strings-interior" } ]
         },
         {
           "comment": "Valid tags with file param (optional close)",
           "name": "meta.string.tag.${2:/downcase}.self-closing.renpy",
-          "match": "({)\\s*(font)(=)([\\w.]+)\\s*(})",
-          "captures": {
+          "begin": "({)\\s*(font)(=)([\\w.]+)\\s*(})",
+          "beginCaptures": {
             "0": { "name": "meta.string.tag.${2:/downcase}.start.renpy" },
             "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
             "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
             "3": { "name": "punctuation.separator.key-value.renpy keyword.operator.assignment.renpy" },
             "4": { "name": "support.constant.property-value.renpy string.unquoted.renpy" },
             "5": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
-          }
+          },
+          "end": "({/)\\s*(font)\\s*(})",
+          "endCaptures": {
+            "0": { "name": "meta.string.tag.${2:/downcase}.end.renpy" },
+            "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
+            "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
+            "3": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
+          },
+          "patterns": [ { "include": "#strings-interior" } ]
         },
         {
           "comment": "Color tag",
-          "match": "({)\\s*(color|outlinecolor)(=)(#?[a-zA-Z0-9]+)\\s*(})",
-          "captures": {
+          "begin": "({)\\s*(color|outlinecolor)(=)(#?[a-zA-Z0-9]+)\\s*(})",
+          "beginCaptures": {
             "0": { "name": "meta.string.tag.${2:/downcase}.start.renpy" },
             "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
             "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
@@ -619,7 +643,15 @@
               "patterns": [ { "include": "#hex_literal" } ]
             },
             "5": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
-          }
+          },
+          "end": "({/)\\s*(color|outlinecolor)\\s*(})",
+          "endCaptures": {
+            "0": { "name": "meta.string.tag.${2:/downcase}.end.renpy" },
+            "1": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.begin.renpy" },
+            "2": { "name": "entity.name.tag.${2:/downcase}.renpy" },
+            "3": { "name": "constant.character.format.placeholder.other.renpy punctuation.definition.tag.end.renpy" }
+          },
+          "patterns": [ { "include": "#strings-interior" } ]
         },
         {
           "comment": "a tag",

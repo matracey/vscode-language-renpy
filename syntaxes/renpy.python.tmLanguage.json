@@ -37,6 +37,24 @@
     "python": {
       "patterns": [ { "include": "#statement" }, { "include": "#expression" } ]
     },
+    "reference-strings-screen": {
+      "comment": "Highlight screen name references in renpy.call_screen/show_screen/hide_screen first argument (single quoted or double quoted)",
+      "patterns": [
+        {
+          "name": "meta.function-call.arguments.screen-reference.renpy",
+          "comment": "First string arg of renpy.call_screen/show_screen/hide_screen",
+          "match": "(?<!\\.)\\b(renpy)\\.(call_screen|show_screen|hide_screen)\\s*(\\()\\s*([rRuUbB]?['\"]) ([A-Za-z_][A-Za-z0-9_]*) (['\"]) (?=\\s*[,)])",
+          "captures": {
+            "1": { "name": "support.module.renpy" },
+            "2": { "name": "support.function.screen.${2:/downcase}.renpy" },
+            "3": { "name": "punctuation.definition.arguments.begin.python" },
+            "4": { "name": "punctuation.definition.string.begin.python" },
+            "5": { "name": "entity.name.screen.reference.renpy" },
+            "6": { "name": "punctuation.definition.string.end.python" }
+          }
+        }
+      ]
+    },
     "impossible": {
       "comment": "This is a special rule that should be used where no match is desired. It is not a good idea to match something like '1{0}' because in some cases that can result in infinite loops in token generation. So the rule instead matches and impossible expression to allow a match to fail and move to the next token.",
       "match": "$.^"
@@ -255,6 +273,7 @@
       "patterns": [
         { "include": "#expression-base" },
         { "include": "#member-access" },
+        { "include": "#reference-strings-screen" },
         {
           "comment": "Tokenize identifiers to help linters",
           "name": "variable.name.python",
@@ -2369,6 +2388,33 @@
         {
           "name": "storage.type.format.python",
           "match": "(\\w)"
+        }
+      ]
+    },
+    "reference-strings": {
+      "comment": "Highlight reference string arguments in renpy API calls",
+      "patterns": [
+        {
+          "name": "meta.call.reference.label.renpy",
+          "match": "(?x)\\brenpy\\.(?:jump|call)\\(\\s*(['\"])(([A-Za-z_][A-Za-z0-9_]*)(?:\\.[A-Za-z_][A-Za-z0-9_]*)*)\\1",
+          "captures": {
+            "2": { "name": "entity.name.reference.label.renpy" },
+            "3": { "name": "entity.name.reference.label.segment.renpy" }
+          }
+        },
+        {
+          "name": "meta.call.reference.image.renpy",
+          "match": "(?x)\\brenpy\\.(?:show|image|hide)\\(\\s*(['\"])((?:[^'\"\\]|\\\\.)+?)\\1",
+          "captures": {
+            "2": { "name": "entity.name.reference.image.renpy" }
+          }
+        },
+        {
+          "name": "meta.call.reference.layer.renpy",
+          "match": "(?x)\\brenpy\\.show_layer_at\\([^)]*?layer\\s*=\\s*(['\"])(([A-Za-z_][A-Za-z0-9_]*)?)\\1",
+          "captures": {
+            "2": { "name": "entity.name.reference.layer.renpy" }
+          }
         }
       ]
     }
