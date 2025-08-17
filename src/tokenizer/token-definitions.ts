@@ -2,9 +2,9 @@
 import { LogLevel, Position, Range as VSRange, TextDocument } from "vscode";
 
 import { Vector } from "src/types";
+import { EnumToString } from "src/utilities";
 
 import { logMessage } from "../logger";
-import { EnumToString } from "../utilities/utils";
 
 import { CharacterTokenType, EntityTokenType, EscapedCharacterTokenType, KeywordTokenType, LiteralTokenType, MetaTokenType, OperatorTokenType, TokenType, TokenTypeIndex, TypeOfTokenType } from "./renpy-tokens";
 import { TokenMatchPattern, TokenPattern, TokenRangePattern, TokenRepoPattern } from "./token-pattern-types";
