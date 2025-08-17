@@ -4,10 +4,11 @@
 import * as fs from "fs";
 import { CancellationToken, Hover, languages, MarkdownString, Position, ProviderResult, Range, TextDocument, Uri } from "vscode";
 
+import { extractFilename, getFileWithPath, stripWorkspaceFromFile } from "src/utilities";
+
 import { getKeywordPrefix } from "./extension";
 import { formatDocumentationAsMarkdown, getPyDocsAtLine, Navigation, rangeAsString } from "./navigation";
 import { NavigationData } from "./navigation-data";
-import { extractFilename, getFileWithPath, stripWorkspaceFromFile } from "./workspace";
 
 export const hoverProvider = languages.registerHoverProvider("renpy", {
     provideHover(document: TextDocument, position: Position, token: CancellationToken): ProviderResult<Hover> {

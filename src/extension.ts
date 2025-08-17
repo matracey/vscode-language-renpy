@@ -6,6 +6,8 @@ import * as cp from "child_process";
 import * as fs from "fs";
 import { commands, debug, DebugConfiguration, DebugConfigurationProviderTriggerKind, ExtensionContext, ExtensionMode, languages, LogLevel, Position, ProviderResult, Range, tasks, TextDocument, Uri, window, workspace } from "vscode";
 
+import { cleanUpPath, getAudioFolder, getImagesFolder, getNavigationJsonFilepath, getWorkspaceFolder, stripWorkspaceFromFile } from "src/utilities";
+
 import { registerDebugDecorator, unregisterDebugDecorator } from "./tokenizer/debug-decorator";
 import { Tokenizer } from "./tokenizer/tokenizer";
 import { colorProvider } from "./color";
@@ -22,7 +24,6 @@ import { referencesProvider } from "./references";
 import { semanticTokensProvider } from "./semantics";
 import { signatureProvider } from "./signature";
 import { RenpyTaskProvider } from "./task-provider";
-import { cleanUpPath, getAudioFolder, getImagesFolder, getNavigationJsonFilepath, getWorkspaceFolder, stripWorkspaceFromFile } from "./workspace";
 
 let extensionMode: ExtensionMode = null!;
 

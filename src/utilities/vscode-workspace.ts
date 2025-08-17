@@ -2,7 +2,7 @@
 "use strict";
 
 import * as fs from "fs";
-import { workspace } from "vscode";
+import vscode from "vscode";
 
 /**
  * Extracts the filename (including extension) from a file path.
@@ -73,8 +73,8 @@ export function stripWorkspaceFromFile(str: string) {
  * @returns The cleaned workspace folder path, or an empty string if none is open.
  */
 export function getWorkspaceFolder() {
-    if (workspace.workspaceFolders && workspace.workspaceFolders.length > 0) {
-        let wf = workspace.workspaceFolders[0].uri.path;
+    if (vscode.workspace.workspaceFolders && vscode.workspace.workspaceFolders.length > 0) {
+        let wf = vscode.workspace.workspaceFolders[0].uri.path;
         wf = cleanUpPath(wf);
         return wf;
     }

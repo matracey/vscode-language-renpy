@@ -1,10 +1,11 @@
 // Diagnostics (warnings and errors)
 import { commands, Diagnostic, DiagnosticCollection, DiagnosticSeverity, Disposable, ExtensionContext, FileType, languages, LogLevel, Range, TextDocument, Uri, window, workspace } from "vscode";
 
+import { extractFilename } from "src/utilities";
+
 import { LogCategory, logCatMessage } from "./logger";
 import { NavigationData } from "./navigation-data";
 import { getAllOpenTabInputTextUri } from "./utilities";
-import { extractFilename } from "./workspace";
 
 // Renpy Store Variables (https://www.renpy.org/doc/html/store_variables.html)
 // These variables do not begin with '_' but should be ignored by store warnings because they are pre-defined by Ren'Py
