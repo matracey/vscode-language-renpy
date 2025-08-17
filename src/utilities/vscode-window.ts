@@ -1,4 +1,4 @@
-import { TabInputText, Uri, window } from "vscode";
+import vscode from "vscode";
 
 /**
  * Retrieves the URIs of all open tabs that are text documents.
@@ -6,7 +6,7 @@ import { TabInputText, Uri, window } from "vscode";
  * This function iterates through all tab groups and their tabs in the current VS Code window.
  * It filters for tabs whose input is an instance of `TabInputText` and collects their URIs.
  *
- * @returns {Uri[]} An array of `Uri` objects, each representing an open text document tab.
+ * @returns {vscode.Uri[]} An array of `vscode.Uri` objects, each representing an open text document tab.
  * @example
  * ```typescript
  * const openTextUris = getAllOpenTabInputTextUri();
@@ -14,12 +14,12 @@ import { TabInputText, Uri, window } from "vscode";
  * openTextUris.forEach(uri => console.log(uri.fsPath));
  * ```
  */
-export function getAllOpenTabInputTextUri(): Uri[] {
-    const uris: Uri[] = [];
-    const tabGroups = window.tabGroups.all;
+export function getAllOpenTabInputTextUri(): vscode.Uri[] {
+    const uris: vscode.Uri[] = [];
+    const tabGroups = vscode.window.tabGroups.all;
     const tabs = tabGroups.flatMap((group) => group.tabs.map((tab) => tab));
     tabs.forEach((tab) => {
-        if (tab.input instanceof TabInputText) {
+        if (tab.input instanceof vscode.TabInputText) {
             uris.push(tab.input.uri);
         }
     });
