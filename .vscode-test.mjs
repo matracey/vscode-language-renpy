@@ -7,6 +7,11 @@ export default defineConfig({
         ui: "bdd",
         timeout: 20000,
         require: ["ts-node/register", "tsconfig-paths/register"],
+        reporter: "mocha-multi-reporters",
+        reporterOptions: {
+            reporterEnabled: "spec, mocha-junit-reporter",
+            mochaFile: "test-results.xml",
+        },
     },
     coverage: {
         reporter: ["text", "html", "lcov"],
